@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <navbar v-if="currentUser" />
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {mapState} from 'vuex'
+
+import navbar from './components/navbar'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    navbar,
+  },
+  computed: {
+    ...mapState(['currentUser'])
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+html body{
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: rgb(246, 246, 246);
+  box-sizing: border-box !important;
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #494949;
+    margin: 0;
+    padding: 0;
+  }
 }
+
 </style>
