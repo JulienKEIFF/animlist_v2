@@ -1,7 +1,7 @@
 <template>
   <div class="anime-card">
     <h1>{{title}}</h1>
-    <h2>{{episode}} épisode</h2>
+    <h2>{{tome}} épisode</h2>
     <p>{{descr}} </p>
     <div class="button">
       <span @click="likeFunction" class="mdi mdi-heart" :class="like ? 'like' : 'no-like'"></span>
@@ -16,11 +16,11 @@ import {db} from '../../firebaseConfig'
 const fb = require('../../firebaseConfig')
 
   export default {
-    name: 'AnimeCard',
+    name: 'MangaCard',
 
     props: {
       title: null,
-      episode: null,
+      tome: null,
       descr: null,
       id: null,
     },
@@ -38,15 +38,15 @@ const fb = require('../../firebaseConfig')
           
           return transaction.get(db.collection('users').doc(fb.auth.currentUser.uid))
           .then(function(likeDoc){
-            if(likeDoc.data().animeLike.includes(idItem)){
-              let index = likeDoc.data().animeLike.indexOf(idItem)
-              let newArray = likeDoc.data().animeLike.slice()
+            if(likeDoc.data().mangaLike.includes(idItem)){
+              let index = likeDoc.data().mangaLike.indexOf(idItem)
+              let newArray = likeDoc.data().mangaLike.slice()
               newArray.splice(index, 1)
-              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeLike: newArray})
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaLike: newArray})
             }else{
-              let itemLike = likeDoc.data().animeLike.slice()
+              let itemLike = likeDoc.data().mangaLike.slice()
               itemLike.push(idItem)
-              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeLike: itemLike})
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaLike: itemLike})
             }
           })
         })
@@ -58,15 +58,15 @@ const fb = require('../../firebaseConfig')
           
           return transaction.get(db.collection('users').doc(fb.auth.currentUser.uid))
           .then(function(viewDoc){
-            if(viewDoc.data().animeView.includes(idItem)){
-              let index = viewDoc.data().animeView.indexOf(idItem)
-              let newArray = viewDoc.data().animeView.slice()
+            if(viewDoc.data().mangaView.includes(idItem)){
+              let index = viewDoc.data().mangaView.indexOf(idItem)
+              let newArray = viewDoc.data().mangaView.slice()
               newArray.splice(index, 1)
-              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeView: newArray})
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaView: newArray})
             }else{
-              let itemView = viewDoc.data().animeView.slice()
+              let itemView = viewDoc.data().mangaView.slice()
               itemView.push(idItem)
-              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeView: itemView})
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaView: itemView})
             }
           })
         })
@@ -75,7 +75,7 @@ const fb = require('../../firebaseConfig')
     mounted: async function() {
       let likeUser = await db.collection('users').doc(fb.auth.currentUser.uid).get()
         .then(doc => {
-          return doc.data().animeLike
+          return doc.data().mangaLike
         })
       if(likeUser.includes(this.id)){
         this.like = true
@@ -84,7 +84,7 @@ const fb = require('../../firebaseConfig')
       }
       let viewUser = await db.collection('users').doc(fb.auth.currentUser.uid).get()
         .then(doc => {
-          return doc.data().animeView
+          return doc.data().mangaView
         })
       if(viewUser.includes(this.id)){
         this.view = true

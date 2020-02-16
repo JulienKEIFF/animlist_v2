@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar v-if="currentUser" />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

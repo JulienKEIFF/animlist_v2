@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import firebase from 'firebase'
 
 import Login from './components/login'
-import Library from './components/library'
-import Settings from './components/setting'
+import Anime from './components/libraryAnime'
+import Manga from './components/libraryManga'
+import Manage from './components/library_comp/libraryManage'
 import Admin from './components/admin'
 
 Vue.use(Router)
@@ -14,7 +15,7 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/library'
+      redirect: '/library/anime'
     },
     {
       path: '/login',
@@ -22,17 +23,25 @@ const router = new Router({
       component: Login,
     },
     {
-      path: '/library',
-      name: 'Library',
-      component: Library,
+      path: '/library/anime',
+      name: 'Anime',
+      component: Anime,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/settings',
-      name: 'Settings',
-      component: Settings,
+      path: '/library/manga',
+      name: 'Manga',
+      component: Manga,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/library/manage',
+      name: 'Manage',
+      component: Manage,
       meta: {
         requiresAuth: true
       }

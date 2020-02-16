@@ -108,7 +108,13 @@ const fb = require('../firebaseConfig.js')
             // create user obj
             fb.usersCollection.doc(user.user.uid).set({
               name: this.signupForm.name,
-              isAdmin: false
+              isAdmin: false,
+              animeLike: [],
+              animeView: [],
+              animeList: [],
+              mangaLike: [],
+              mangaView: [],
+              mangaList: []
             }).then(() => {
               this.$store.dispatch('fetchUserProfile')
               this.$router.push('/library')
