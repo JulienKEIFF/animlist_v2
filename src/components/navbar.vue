@@ -39,6 +39,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 3;
   h1{
     margin: 0;
     color: rgba(255, 255, 255, 0.938);

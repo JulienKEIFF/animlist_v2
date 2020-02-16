@@ -174,6 +174,10 @@ const fb = require('../firebaseConfig.js')
     width: calc(100% - 55px);
     margin: 0 0 20px 20px;
     font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid rgb(197, 197, 197);
+    padding: 0 5px 0 5px;
+    background: rgba(255, 255, 255, 0.226);
   }
   button{
     width: 175px;

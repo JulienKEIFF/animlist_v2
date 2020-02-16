@@ -12,6 +12,7 @@
     <button @click="addAnime">Valider</button>
 
     <br>
+
     <h1>Title: {{anime.title}}</h1>
     <h1>Episode: {{anime.episode}}</h1>
     <h1>Description: {{anime.descr}}</h1>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import {db} from '../firebaseConfig'
+//import {db} from '../firebaseConfig'
 
   export default {
     name: 'admin',
@@ -35,7 +36,11 @@ import {db} from '../firebaseConfig'
     },
     methods: {
       addAnime(){
-        db.collection('anime').add(this.anime)
+        let episode = this.anime.episode
+        parseInt(episode)
+        this.anime.episode = episode
+        //db.collection('anime').add(this.anime)
+        console.log(typeof episode)
         this.anime = {
           title: '',
           episode: null,

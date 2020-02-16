@@ -12,12 +12,10 @@
 
 <script>
 import {db} from '../../firebaseConfig'
-
 const fb = require('../../firebaseConfig')
 
   export default {
     name: 'AnimeCard',
-
     props: {
       title: null,
       episode: null,
