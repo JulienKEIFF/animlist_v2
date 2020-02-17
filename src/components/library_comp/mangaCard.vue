@@ -1,7 +1,7 @@
 <template>
   <div class="anime-card">
     <h1>{{title}}</h1>
-    <h2>{{tome}} épisode</h2>
+    <h2>{{tome}} Tomes</h2>
     <p>{{descr}} </p>
     <div class="button">
       <span @click="likeFunction" class="mdi mdi-heart" :class="like ? 'like' : 'no-like'"></span>

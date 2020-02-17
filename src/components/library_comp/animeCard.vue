@@ -33,7 +33,6 @@ const fb = require('../../firebaseConfig')
         this.like = !this.like
         let idItem = this.id
         db.runTransaction(function(transaction){
-          
           return transaction.get(db.collection('users').doc(fb.auth.currentUser.uid))
           .then(function(likeDoc){
             if(likeDoc.data().animeLike.includes(idItem)){

@@ -1,17 +1,24 @@
 <template>
   <div id="nav">
-    <h1>AnimList</h1>
+    <router-link to="/" tag="h1">ANIMLIST</router-link>
     <div class="end">
+      <router-link v-if="isAdmin" to="/admin" tag="span" class="mdi mdi-cloud-braces"></router-link>
       <span @click="logout" class="mdi mdi-logout-variant"></span>
     </div>
   </div>
 </template>
 
 <script>
+import {db} from '../firebaseConfig'
 const fb = require('../firebaseConfig.js')
 
 export default {
   name: 'navbar',
+  data() {
+    return {
+      isAdmin: false,
+    }
+  },
   methods: {
     logout() {
       fb.auth.signOut().then(() => {
@@ -22,6 +29,14 @@ export default {
         console.log(err)
       })
     }
+  },
+  mounted: async function(){
+    await db.collection('users').doc(fb.auth.currentUser.uid).get()
+    .then(doc =>{
+      if(doc._document.proto.fields.isAdmin.booleanValue === true){
+        this.isAdmin = true
+      }
+    })
   }
 }
 </script>
@@ -47,6 +62,7 @@ export default {
     text-transform: uppercase;
     font-weight: bolder;
     margin-left: 10px;
+    cursor: pointer;
   }
   .end{
     position: absolute;
@@ -54,6 +70,8 @@ export default {
     .mdi{
       font-size: 35px;
       color: rgba(255, 255, 255, 0.938);
+      margin: 0 10px 0 10px;
+      cursor: pointer;
     }
   }
 }

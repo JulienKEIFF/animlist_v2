@@ -14,9 +14,9 @@
 
     <div v-if="animeTab">
       <div id="research">
-        <input type="text" name="research" id="research-input" placeholder="Chercher un anime">
+        <input type="text" name="research" id="research-input" placeholder="Chercher un anime" v-model="animeSearch">
       </div>
-      <div v-for="anime in animeList" :key="anime.title">
+      <div v-for="anime in animeFilter" :key="anime.title">
         <managerAnimeCard class="item" :title="anime.title" :episode="anime.episode" :descr="anime.descr" :id="anime.id" />
       </div>
     </div>
@@ -25,12 +25,10 @@
       <div id="research">
         <input type="text" name="research" id="research-input" placeholder="Chercher un manga" v-model="mangaSearch">
       </div>
-      <div v-for="manga in mangaList" :key="manga.title">
+      <div v-for="manga in mangaFilter" :key="manga.title">
         <managerMangaCard class="item" :title="manga.title" :tome="manga.tome" :descr="manga.descr" :id="manga.id" />
       </div>
     </div>
-
-    <button @click="test">test</button>
 
   </div>
 </template>
@@ -79,15 +77,16 @@ export default {
           animeList.push(animeGet)
         })
         this.animeList = animeList
+        this.animeList.sort(function(a,b){
+          let x = a.title.toLowerCase();
+          let y = b.title.toLowerCase();
+          return x < y ? -1 : x > y ? 1 : 0;
+        });
       })
       .catch(err => {
         console.log(err)
       })
-      this.mangaList.sort(function(a,b){
-        let x = a.title.toLowerCase();
-        let y = b.title.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
+      
 
       db.collection('manga').get()
       .then(query => {
@@ -102,6 +101,11 @@ export default {
           mangaList.push(mangaGet)
         })
         this.mangaList = mangaList
+        this.mangaList.sort(function(a,b){
+          let x = a.title.toLowerCase();
+          let y = b.title.toLowerCase();
+          return x < y ? -1 : x > y ? 1 : 0;
+        });
       })
       .catch(err => {
         console.log(err)
@@ -116,9 +120,6 @@ export default {
         this.mangaTab = true
       }
     },
-    test(){
-      console.log(this.animeList)
-    }
   },
   mounted: async function(){
     await db.collection('users').doc(fb.auth.currentUser.uid).get()
@@ -133,7 +134,6 @@ export default {
   computed: {
     animeFilter() {
       return this.animeList.filter(post => {
-        console.log(post)
         return post.title.toLowerCase().includes(this.animeSearch.toLowerCase())
       })
     },

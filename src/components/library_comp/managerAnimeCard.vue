@@ -10,8 +10,8 @@
 </template>
 
 <script>
-//import {db} from '../../firebaseConfig'
-//const fb = require('../../firebaseConfig')
+import {db} from '../../firebaseConfig'
+const fb = require('../../firebaseConfig')
 
   export default {
     name: 'ManagerAnimeCard',
@@ -30,15 +30,34 @@
     methods: {
       addFunction(){
         this.add = !this.add
-        if(this.add === true){
-          console.log("add :" + this.id)
-        }else if(this.add === false){
-          console.log("remove :" + this.id)
-        }
+        let idItem = this.id
+        db.runTransaction(function(transaction){
+          return transaction.get(db.collection('users').doc(fb.auth.currentUser.uid))
+          .then(function(doc){
+            if(doc.data().animeList.includes(idItem)){
+              let index = doc.data().animeList.indexOf(idItem)
+              let newArray = doc.data().animeList.slice()
+              newArray.splice(index, 1)
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeList: newArray})
+            }else{
+              let items = doc.data().animeList.slice()
+              items.push(idItem)
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {animeList: items})
+            }
+          })
+        })
       }
     },
     mounted: async function() {
-      
+      let inUserList = await db.collection('users').doc(fb.auth.currentUser.uid).get()
+        .then(doc => {
+          return doc.data().animeList
+        })
+      if(inUserList.includes(this.id)){
+        this.add = true
+      }else{
+        this.add = false
+      }
     }
   }
 </script>

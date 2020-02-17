@@ -6,7 +6,7 @@
       <router-link to="/library/manage" tag="p">bibliotheque</router-link>
     </div>
     <div class="item" v-for="manga in mangas" :key="manga.title">
-      <mangaCard :title="manga.title" :episode="manga.tome" :descr="manga.descr" :id="manga.id" />
+      <mangaCard :title="manga.title" :tome="manga.tome" :descr="manga.descr" :id="manga.id" />
     </div>
   </div>
 </template>

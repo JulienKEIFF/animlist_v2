@@ -1,7 +1,7 @@
 <template>
   <div class="anime-card">
     <h1>{{title}}</h1>
-    <h2>{{tome}} tome</h2>
+    <h2>{{tome}} Tomes</h2>
     <p>{{descr}} </p>
     <div class="button">
       <span @click="addFunction" class="mdi" :class="add ? 'mdi-playlist-remove' : 'mdi-playlist-plus'"></span>
@@ -10,8 +10,8 @@
 </template>
 
 <script>
-//import {db} from '../../firebaseConfig'
-//const fb = require('../../firebaseConfig')
+import {db} from '../../firebaseConfig'
+const fb = require('../../firebaseConfig')
 
   export default {
     name: 'ManagerMangaCard',
@@ -30,15 +30,34 @@
     methods: {
       addFunction(){
         this.add = !this.add
-        if(this.add === true){
-          console.log("add :" + this.id)
-        }else if(this.add === false){
-          console.log("remove :" + this.id)
-        }
+        let idItem = this.id
+        db.runTransaction(function(transaction){
+          return transaction.get(db.collection('users').doc(fb.auth.currentUser.uid))
+          .then(function(doc){
+            if(doc.data().mangaList.includes(idItem)){
+              let index = doc.data().mangaList.indexOf(idItem)
+              let newArray = doc.data().mangaList.slice()
+              newArray.splice(index, 1)
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaList: newArray})
+            }else{
+              let items = doc.data().mangaList.slice()
+              items.push(idItem)
+              transaction.update(db.collection("users").doc(fb.auth.currentUser.uid), {mangaList: items})
+            }
+          })
+        })
       }
     },
     mounted: async function() {
-      
+      let inUserList = await db.collection('users').doc(fb.auth.currentUser.uid).get()
+        .then(doc => {
+          return doc.data().mangaList
+        })
+      if(inUserList.includes(this.id)){
+        this.add = true
+      }else{
+        this.add = false
+      }
     }
   }
 </script>
