@@ -95,18 +95,47 @@ import {db} from '../firebaseConfig'
     input{
       position: absolute;
       left: 320px;
-      width: 250px;
+      width: calc(100% - 450px);
     }
     .validate{
       position: absolute;
-      top: 160px;
-      left: 65%;
-      height: 75px;
-      width: 100px;
+      top: 37%;
+      left: 80px;
+      height: 50px;
+      width: 150px;
     }
   }
   #toggle-button{
     margin-bottom: 25px;
+  }
+}
+
+@media (max-width : 770px) {
+  #admin{
+    margin: 120px 15px 15px 15px;
+    .add{
+      background-color: white;
+      height: 80px;
+      padding: 5px;
+      label{
+        font-size: 13px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      input{
+        position: absolute;
+        left: 200px;
+        width: calc(100% - 250px);
+      }
+      .validate{
+        position: absolute;
+        top: 37%;
+        left: 15px;
+        height: 40px;
+        width: 100px;
+      }
+    }
   }
 }
 </style>

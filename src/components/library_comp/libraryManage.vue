@@ -177,4 +177,22 @@ export default {
     width: calc(100% - 15px);
   }
 }
+
+@media (max-width : 770px) {
+  #main{
+    margin: 120px 15px 5px 15px;
+  }
+  .menu{
+    position: absolute;
+    top: 70px;
+    p{
+      float: left;
+    }
+  }
+  .selector{
+    position: absolute;
+    top: 90px;
+    left: calc(100% - 90px);
+  }
+}
 </style>

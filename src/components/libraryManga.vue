@@ -84,10 +84,18 @@ const fb = require('../firebaseConfig')
     font-weight: bold;
     font-size: 17px;
     margin: 20px 0 10px 0;
-    &:last-child{
-      border-top: solid 1px rgb(190, 190, 190);
-      margin-top: 20px;
-      padding-top: 5px;
+    width: 80px;
+  }
+}
+
+@media (max-width : 770px) {
+  #main{
+    margin: 120px 15px 5px 15px;
+  }
+  .menu{
+    top: 70px;
+    p{
+      float: left;
     }
   }
 }

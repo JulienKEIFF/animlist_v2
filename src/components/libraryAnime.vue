@@ -87,4 +87,16 @@ const fb = require('../firebaseConfig')
     width: 80px;
   }
 }
+
+@media (max-width : 770px) {
+  #main{
+    margin: 120px 15px 5px 15px;
+  }
+  .menu{
+    top: 70px;
+    p{
+      float: left;
+    }
+  }
+}
 </style>

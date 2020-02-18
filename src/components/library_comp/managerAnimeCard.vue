@@ -65,27 +65,59 @@ const fb = require('../../firebaseConfig')
 <style scoped lang="scss">
 .anime-card{
   position: relative;
-  padding: 15px;
+  padding: 30px;
   background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.253);
   h1{
     margin: 0;
     text-transform: uppercase;
   }
-  .mdi{
+  p{
+    text-align: justify;
+    text-justify: auto;
+  }
+  .button{
+    display: inline-block;
+    width: 80px;
     position: absolute;
-    font-size: 30px;
-    transition-duration: 0.2s;
+    left: 93%;
+    top: 20px;
+    .mdi{
+      font-size: 30px;
+      transition-duration: 0.2s;
+      width: 40px;
+      margin-right: 25px;
+      color: #696969;
+    }
   }
-  .mdi.mdi-playlist-remove{
-    right: 40px;
-    top: 25px;
-    color: #696969;
-  }
-  .mdi.mdi-playlist-plus{
-    right: 40px;
-    top: 25px;
-    color: #696969;
+}
+
+@media (max-width : 770px) {
+  .anime-card{
+    padding: 20px 20px 35px 20px;
+    h1{
+      font-size: 20px;
+    }
+    h2{
+      font-size: 17px;
+    }
+    p{
+      font-size: 15px;
+      text-align: justify;
+      text-justify: auto;
+    }
+    .button{
+      display: inline-block;
+      width: 40px;
+      position: absolute;
+      left: 85%;
+      top: calc(100% - 40px);
+      .mdi{
+        font-size: 25px;
+        width: 40px;
+        margin-right: 5px;
+      }
+    }
   }
 }
 </style>

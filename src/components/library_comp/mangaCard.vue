@@ -1,5 +1,5 @@
 <template>
-  <div class="anime-card">
+  <div class="manga-card">
     <h1>{{title}}</h1>
     <h2>{{tome}} Tomes</h2>
     <p>{{descr}} </p>
@@ -96,37 +96,73 @@ const fb = require('../../firebaseConfig')
 </script>
 
 <style scoped lang="scss">
-.anime-card{
+.manga-card{
   position: relative;
-  padding: 15px;
+  padding: 20px;
   background-color: rgba(255, 255, 255, 0.911);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.253);
   h1{
     margin: 0;
     text-transform: uppercase;
   }
-  .mdi{
+  p{
+    text-align: justify;
+    text-justify: auto;
+  }
+  .button{
+    display: inline-block;
+    width: 80px;
     position: absolute;
-    font-size: 30px;
-    transition-duration: 0.2s;
+    left: 93%;
+    top: 20px;
+    .mdi{
+      font-size: 30px;
+      transition-duration: 0.2s;
+      width: 40px;
+      margin-right: 25px;
+    }
+    .mdi.no-like{
+      color: rgb(231, 231, 231);
+    }
+    .mdi.like{
+      color: #ef534f;
+    }
   }
-  .mdi.no-like{
-    right: 40px;
-    top: 25px;
-    color: rgb(231, 231, 231);
-  }
-  .mdi.like{
-    right: 40px;
-    top: 25px;
-    color: #ef534f;
-  }
-  .mdi.mdi-eye{
-    right: 40px;
-    top: 65px;
-  }
-  .mdi.mdi-eye-off{
-    right: 40px;
-    top: 65px;
+}
+
+@media (max-width : 770px) {
+  .manga-card{
+    padding: 20px 20px 35px 20px;
+    h1{
+      font-size: 20px;
+    }
+    h2{
+      font-size: 17px;
+    }
+    p{
+      font-size: 15px;
+      text-align: justify;
+      text-justify: auto;
+    }
+    .button{
+      display: inline-block;
+      width: 80px;
+      position: absolute;
+      left: 80%;
+      top: calc(100% - 40px);
+      .mdi{
+        font-size: 25px;
+        transition-duration: 0.2s;
+        width: 40px;
+        margin-right: 5px;
+      }
+      .mdi.no-like{
+        color: rgb(231, 231, 231);
+      }
+      .mdi.like{
+        color: #ef534f;
+      }
+    }
   }
 }
 </style>
