@@ -209,4 +209,9 @@ const fb = require('../firebaseConfig.js')
   }
 }
 
+@media (max-width : 770px) {
+  .container{
+    width: 80%;
+  }
+}
 </style>
