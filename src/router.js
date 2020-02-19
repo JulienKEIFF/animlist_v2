@@ -11,7 +11,7 @@ import Admin from './components/admin'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '*',

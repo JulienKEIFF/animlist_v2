@@ -5,7 +5,11 @@
       <router-link to="/library/manga" tag="p">Manga</router-link>
       <router-link to="/library/manage" tag="p">bibliotheque</router-link>
     </div>
-    <div class="item" v-for="anime in animes" :key="anime.title">
+
+    <div id="research">
+      <input type="text" name="research" id="research-input" placeholder="Chercher un anime" v-model="animeSearch">
+    </div>
+    <div class="item" v-for="anime in animeFilter" :key="anime.title">
       <animeCard :title="anime.title" :episode="anime.episode" :descr="anime.descr" :id="anime.id" />
     </div>
   </div>
@@ -26,7 +30,8 @@ const fb = require('../firebaseConfig')
     data() {
       return{
         animes: [],
-        userList: []
+        userList: [],
+        animeSearch: "",
       }
     },
     methods: {
@@ -43,6 +48,11 @@ const fb = require('../firebaseConfig')
               id: el
             }
             this.animes.push(animeGet)
+            this.animes.sort(function(a,b){
+              let x = a.title.toLowerCase();
+              let y = b.title.toLowerCase();
+              return x < y ? -1 : x > y ? 1 : 0;
+            });
           })
           .catch(err => {
             console.log(err)
@@ -64,6 +74,13 @@ const fb = require('../firebaseConfig')
           console.log(err)
         })
       await this.getAnim()
+    },
+    computed: {
+      animeFilter() {
+        return this.animes.filter(post => {
+          return post.title.toLowerCase().includes(this.animeSearch.toLowerCase())
+        })
+      }
     }
   }
 </script>
@@ -85,6 +102,12 @@ const fb = require('../firebaseConfig')
     font-size: 17px;
     margin: 20px 0 10px 0;
     width: 80px;
+  }
+}
+#research{
+  #research-input{
+    margin-bottom: 20px;
+    width: calc(100% - 15px);
   }
 }
 

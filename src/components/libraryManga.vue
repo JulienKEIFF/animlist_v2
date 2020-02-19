@@ -5,7 +5,11 @@
       <router-link to="/library/manga" tag="p">Manga</router-link>
       <router-link to="/library/manage" tag="p">bibliotheque</router-link>
     </div>
-    <div class="item" v-for="manga in mangas" :key="manga.title">
+
+    <div id="research">
+      <input type="text" name="research" id="research-input" placeholder="Chercher un manga" v-model="mangaSearch">
+    </div>
+    <div class="item" v-for="manga in mangaFilter" :key="manga.title">
       <mangaCard :title="manga.title" :tome="manga.tome" :descr="manga.descr" :id="manga.id" />
     </div>
   </div>
@@ -26,7 +30,8 @@ const fb = require('../firebaseConfig')
     data() {
       return{
         mangas: [],
-        userList: []
+        userList: [],
+        mangaSearch: '',
       }
     },
     methods: {
@@ -43,16 +48,16 @@ const fb = require('../firebaseConfig')
               id: el
             }
             this.mangas.push(mangaGet)
+            this.mangas.sort(function(a,b){
+              let x = a.title.toLowerCase();
+              let y = b.title.toLowerCase();
+              return x < y ? -1 : x > y ? 1 : 0;
+            });
           })
           .catch(err => {
             console.log(err)
           })
         }
-        this.mangas.sort(function(a,b){
-          let x = a.title.toLowerCase();
-          let y = b.title.toLowerCase();
-          return x < y ? -1 : x > y ? 1 : 0;
-        });
       }
     },
     mounted: async function() {
@@ -64,6 +69,13 @@ const fb = require('../firebaseConfig')
           console.log(err)
         })
       await this.getManga()
+    },
+    computed: {
+      mangaFilter() {
+        return this.mangas.filter(post => {
+          return post.title.toLowerCase().includes(this.mangaSearch.toLowerCase())
+        })
+      }
     }
   }
 </script>
@@ -85,6 +97,12 @@ const fb = require('../firebaseConfig')
     font-size: 17px;
     margin: 20px 0 10px 0;
     width: 80px;
+  }
+}
+#research{
+  #research-input{
+    margin-bottom: 20px;
+    width: calc(100% - 15px);
   }
 }
 
