@@ -1,5 +1,5 @@
 <template>
-  <div class="anime-card">
+  <div class="anime-card all" :class="like && view ? 'view like' : '' || like ? 'like' : '' || view ? 'view' : ''">
     <h1>{{title}}</h1>
     <h2>{{episode}} épisode</h2>
     <p>{{descr}} </p>

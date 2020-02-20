@@ -4,6 +4,12 @@
       <router-link to="/library/anime" tag="p">Anime</router-link>
       <router-link to="/library/manga" tag="p">Manga</router-link>
       <router-link to="/library/manage" tag="p">bibliotheque</router-link>
+
+      <select name="type" id="type-i" v-model="type" @change="change()">
+        <option value="all">Tous</option>
+        <option value="like">Mes favoris</option>
+        <option value="toView">A voir</option>
+      </select>
     </div>
 
     <div id="research">
@@ -32,6 +38,7 @@ const fb = require('../firebaseConfig')
         animes: [],
         userList: [],
         animeSearch: "",
+        type: "all",
       }
     },
     methods: {
@@ -63,7 +70,16 @@ const fb = require('../firebaseConfig')
           let y = b.title.toLowerCase();
           return x < y ? -1 : x > y ? 1 : 0;
         });
-      }
+      },
+      /* change(){
+        if(this.type === "all"){
+          this.typeFilter('all')
+        }else if(this.type === "like"){
+          this.typeFilter('like')
+        }else if(this.type === "toView"){
+          
+        }
+      }, */
     },
     mounted: async function() {
       await db.collection('users').doc(fb.auth.currentUser.uid).get()
@@ -80,7 +96,7 @@ const fb = require('../firebaseConfig')
         return this.animes.filter(post => {
           return post.title.toLowerCase().includes(this.animeSearch.toLowerCase())
         })
-      }
+      },
     }
   }
 </script>
@@ -103,6 +119,9 @@ const fb = require('../firebaseConfig')
     margin: 20px 0 10px 0;
     width: 80px;
   }
+  select{
+    margin-top: 25px;
+  }
 }
 #research{
   #research-input{
@@ -119,6 +138,13 @@ const fb = require('../firebaseConfig')
     top: 70px;
     p{
       float: left;
+      margin: 15px 0px 10px 0;
+    }
+    select{
+      width: 5px;
+      margin-top: 12px;
+      position: relative;
+      right: -55px;
     }
   }
 }
